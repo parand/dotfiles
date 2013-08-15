@@ -1,0 +1,186 @@
+# Variables
+set $mod Mod4
+set $execi exec --no-startup-id
+set $term terminator
+set $filemanager thunar
+set $dmenu dmenu_run -fn 'Mono-10' -nf '#FFFFFF' -sb '#004040' -nb '#000000' -p 'Dmenu'
+
+#Fix for Gnome Crash
+#$execi ~/.i3/dbusregister.sh
+#
+
+# Font
+font pango: Liberation Mono Bold 10
+
+# Theme				Border		Background	Text		Indicator
+client.focused             	#004040		#004040		#FFFFFF		#004040
+client.focused_inactive    	#008080		#000000		#A0A0A0
+client.unfocused           	#004040		#000000		#A0A0A0
+client.urgent              	#FF0000  	#FF0000    	#FF0000
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d $execi $dmenu
+
+# Focus using cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move using cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+p focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
+# border toggle
+bindsym $mod+u border toggle
+
+# move between workspaces
+bindsym $mod+Control+Right workspace next
+bindsym $mod+Control+Left workspace prev
+
+# assign workspace to screen
+workspace 3 output HDMI1
+workspace 10 output HDMI1
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace 
+bindsym $mod+Shift+r restart
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 5px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Exit menu
+bindsym $mod+Shift+e exec $HOME/.i3/exitmenu
+
+bar {
+	position bottom
+	font pango: Liberation Mono Bold 10
+	workspace_buttons yes
+	colors {
+        #background #00002A
+	background #000000
+	separator #A0A0A0
+        statusline #FFFFFF
+        focused_workspace  #008080 #008080 #FFFFFF
+        active_workspace   #008080 #008080 #FFFFFF
+        inactive_workspace #004040 #004040 #A0A0A0
+        urgent_workspace   #2f343a #900000 #ffffff
+		}
+	tray_output primary
+	status_command i3status --config $HOME/.i3/i3status.conf
+}
+
+# start a terminal
+bindsym $mod+Return $execi $term
+
+# Autostart
+$execi hsetroot -solid #000000
+$execi compton -cCGfb -D 2 --paint-on-overlay
+$execi /usr/share/eclipse/eclimd
+
+# force floating for all new windows
+#for_window [class="[.]*"] floating enable
+# make all terminals not floating
+#for_window [class="Lxterminal"] floating disable
+
+# My stuff
+new_window 1pixel
+
+# Stuff that needs to float
+for_window [class="Pamac-manager"] floating enable
+for_window [class="Skype"] floating enable
+for_window [class="Xfce4-notifyd"] floating enable
+for_window [class="Xfrun4"] floating enable
+for_window [class="Pidgin"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="pasture-Pasture"] floating enable
+
+# Brightness keys
+#bindsym XF86MonBrightnessDown $execi xbacklight -dec 10
+#bindsym XF86MonBrightnessUp $execi xbacklight -inc 10
+
+# Launch apps
+bindsym $mod+Control+p $execi pamac-manager
+bindsym $mod+Control+s $execi skype
+bindsym $mod+Control+b $execi dwb
+bindsym $mod+Control+z $execi zathura
+bindsym $mod+Control+l $execi libreoffice
+#bindsym $mod+Control+n $execi netbeans
+bindsym $mod+Control+f $execi $filemanager
+bindsym $mod+Control+v $execi terminator -p vim -e vim
