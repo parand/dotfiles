@@ -3,6 +3,7 @@ set $mod Mod4
 set $execi exec --no-startup-id
 set $term terminator
 set $filemanager thunar
+set $torrentclient transmission-remote-gtk
 set $dmenu dmenu_run -fn 'Mono-10' -nf '#FFFFFF' -sb '#004040' -nb '#000000' -p 'Dmenu'
 
 #Fix for Gnome Crash
@@ -169,7 +170,7 @@ for_window [class="Xfce4-notifyd"] floating enable
 for_window [class="Xfrun4"] floating enable
 for_window [class="Pidgin"] floating enable
 for_window [class="Lxappearance"] floating enable
-for_window [class="pasture-Pasture"] floating enable
+for_window [class="Transmission-remote-gtk"] floating enable
 
 # Brightness keys
 #bindsym XF86MonBrightnessDown $execi xbacklight -dec 10
@@ -183,4 +184,5 @@ bindsym $mod+Control+z $execi zathura
 bindsym $mod+Control+l $execi libreoffice
 #bindsym $mod+Control+n $execi netbeans
 bindsym $mod+Control+f $execi $filemanager
+bindsym $mod+Control+t $execi $torrentclient
 bindsym $mod+Control+v $execi terminator -p vim -e vim
